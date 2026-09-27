@@ -1,17 +1,20 @@
-import sounddevice as sd
+﻿import sounddevice as sd
 import numpy as np
 from faster_whisper import WhisperModel
 from core.llm import BrainLLM
 import queue
 import sys
 
+# 1. Configuración de Modelos
 print("⏳ Cargando STT Whisper (Modelo base)...")
 model_stt = WhisperModel("base", device="cpu", compute_type="int8")
 brain = BrainLLM()
 audio_queue = queue.Queue()
-FS = 16000
-SILENCE_THRESHOLD = 0.01
-SILENCE_DURATION = 1.5
+
+# Parámetros de audio
+FS = 16000  # Frecuencia para Whisper
+SILENCE_THRESHOLD = 0.01  # Sensibilidad del VAD
+SILENCE_DURATION = 1.5  # Segundos de silencio para procesar
 
 def audio_callback(indata, frames, time, status):
     if status: print(status, file=sys.stderr)
@@ -26,11 +29,15 @@ def start_listening():
         while True:
             audio_buffer = []
             print("\n🎤 Escuchando...")
+            
+            # VAD: Espera a que detecte sonido
             recording = False
             silent_chunks = 0
+            
             while True:
                 chunk = audio_queue.get()
                 volume = np.linalg.norm(chunk) / np.sqrt(len(chunk))
+                
                 if volume > SILENCE_THRESHOLD:
                     if not recording:
                         print("🎙️ Voz detectada...")
@@ -40,13 +47,17 @@ def start_listening():
                 elif recording:
                     audio_buffer.append(chunk)
                     silent_chunks += 1
+                    
+                    # Si hay suficiente silencio, procesamos la frase
                     if silent_chunks > int(SILENCE_DURATION * (FS / frames)):
                         break
+            
             if audio_buffer:
                 print("🧠 Transcribiendo...")
                 audio_data = np.concatenate(audio_buffer).flatten()
                 segments, _ = model_stt.transcribe(audio_data, language="es")
                 text = " ".join([seg.text for seg in segments]).strip()
+                
                 if text:
                     print(f"👤 Tú: {text}")
                     print("🤖 Pensando...")
