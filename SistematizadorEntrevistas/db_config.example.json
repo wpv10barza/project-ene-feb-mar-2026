@@ -1,0 +1,8 @@
+{
+  "server": "<SQL_SERVER>",
+  "database": "<DATABASE>",
+  "username": "<USERNAME>",
+  "password": "<PASSWORD>",
+  "encrypt": "yes",
+  "trust_server_certificate": "no"
+}

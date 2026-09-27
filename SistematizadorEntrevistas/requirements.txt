@@ -1,0 +1,6 @@
+pandas>=2.2
+openpyxl>=3.1
+pyodbc>=5.2
+selenium>=4.25
+pyperclip>=1.9
+python-dotenv>=1.0
