@@ -88,7 +88,7 @@ def _extract_last_codeblock_text(driver: webdriver.Edge) -> str:
 # --- FUNCIÓN PRINCIPAL CORREGIDA ---
 def run_chatgpt_via_edge(
     prompt_text: str,
-    wait_seconds: int = 60,
+    wait_seconds: int = 600,
     sheets_url: Optional[str] = None,
     headless: bool = False,
     driver_path: Optional[str] = None,
