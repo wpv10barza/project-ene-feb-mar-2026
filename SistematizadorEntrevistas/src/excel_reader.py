@@ -46,12 +46,14 @@ def read_matrix(path: str | Path, sheet_name: str = DEFAULT_SHEET_NAME) -> pd.Da
     col_codigo = next((c for c in df.columns if c.upper() == "PREGUNTA_CODIGO"), None)
     
     # Buscar columnas de Entrevistadores (E. o .A)
-    cols_entrev = [c for c in df.columns if c.upper().startswith("1.")] # Buscar columnas que empiezan con "1."
-    
+    cols_entrev = [c for c in df.columns if c.upper().startswith("E.")]
+    #if not cols_entrev:
+    #    cols_entrev = [c for c in df.columns if c.upper().endswith("1.")]
         
     # Buscar columnas de Informantes (I. o .B)
-    cols_info = [c for c in df.columns if c.upper().startswith("2.")]
-    
+    cols_info = [c for c in df.columns if c.upper().startswith("I.")]
+    #if not cols_info:
+     #  cols_info = [c for c in df.columns if c.upper().endswith("2.")]
         
     # Buscar columna de Análisis
     col_analisis = next((c for c in df.columns if "ANALISIS_DE_COBERTURA" in c.upper()), None)
