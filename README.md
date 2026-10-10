@@ -26,3 +26,10 @@ Se excluyeron `.git`, entornos virtuales, cachés, datos generados y archivos co
 | `Participantes/` | Conjunto de módulos src/selenium_runner.py, main.py, config.py | 2026-01-14 a 2026-01-14 | 3 | Copia completa; eliminación solo después de verificar hashes. |
 
 Cada carpeta conserva su identidad y estructura. Su README detalla tecnologías, módulos y origen. No se publican contraseñas ni claves de API. La fecha de carga en Drive puede ser posterior al periodo del código.
+
+
+## Copias adicionales recuperadas de Drive
+
+- `03.04 SUBIDA DE PRODUCCIÓN/`: 17 archivos originales seleccionados; periodo 2025-12-23 a 2026-01-02. Se conserva el origen porque hay archivos excluidos.
+
+Los README de cada carpeta documentan propósito, formatos, estructura y módulos a partir de los originales. Las variantes se mantienen separadas del trabajo existente.
