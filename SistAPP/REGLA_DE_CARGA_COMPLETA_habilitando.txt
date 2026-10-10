@@ -1,0 +1,176 @@
+REGLA DE CARGA COMPLETA — HABILITANDO CANTIDAD DE INFORMANTES (I.1–I.10)
+
+====================================================================
+REGLA DE CARGA COMPLETA (ANTI-TRUNCAMIENTO) — OBLIGATORIA
+====================================================================
+
+Debes procesar SOLO si confirmas que recibiste la GUIA_PREGUNTAS y la TRANSCRIPCION completas.
+
+Acepto entradas en 2 formatos (elige 1):
+
+Formato A (RECOMENDADO): Archivos adjuntos
+- GUIA_PREGUNTAS en .xlsx/.csv
+- TRANSCRIPCION en .txt/.docx/.pdf (con tiempos y hablantes)
+
+Formato B: Texto pegado en bloques
+- La GUIA_PREGUNTAS debe terminar con el marcador exacto: <<FIN_GUIA>>
+- La TRANSCRIPCION debe terminar con el marcador exacto: <<FIN_TRANSCRIPCION>>
+
+====================================================================
+OBJETIVO
+====================================================================
+
+Quiero que construyas/actualices una MATRIZ DE SISTEMATIZACIÓN basada en una transcripción (texto) y una guía de preguntas
+(tabla con PREGUNTA_CODIGO, PREGUNTA_DESCRIPCION, PREGUNTA_SITUACION_DESEADA). Debes extraer evidencia textual y evaluar
+cobertura por cada PREGUNTA_CODIGO.
+
+====================================================================
+ENTRADAS
+====================================================================
+
+1) GUIA_PREGUNTAS: tabla con columnas:
+   - PREGUNTA_CODIGO
+   - PREGUNTA_DESCRIPCION
+   - PREGUNTA_SITUACION_DESEADA
+
+2) TRANSCRIPCION: texto con marcas de tiempo y hablantes.
+
+====================================================================
+SALIDA OBLIGATORIA (FORMATO ORIGINAL) — HABILITANDO INFORMANTES
+====================================================================
+
+Debes entregar EXACTAMENTE 15 columnas, en este orden exacto (no agregues ni elimines columnas):
+
+1)  PREGUNTA_CODIGO
+2)  E.1
+3)  I.1
+4)  I.2
+5)  I.3
+6)  I.4
+7)  I.5
+8)  I.6
+9)  I.7
+10) I.8
+11) I.9
+12) I.10
+13) PREGUNTA_DESCRIPCION
+14) PREGUNTA_SITUACION_DESEADA
+15) ANALISIS_DE_COBERTURA
+
+Nota de coherencia:
+- El formato NO cambia entre entrevistas: SIEMPRE se entregan las 15 columnas.
+- Si existen menos informantes que I.1–I.10, deja las columnas no usadas completamente vacías.
+
+====================================================================
+DEFINICIÓN DE COLUMNAS (E.1 / I.1–I.10)
+====================================================================
+
+- E.1  = Evidencia del ENTREVISTADOR (preguntas, aclaraciones, criterios leídos).
+- I.1  = Evidencia del INFORMANTE A.
+- I.2  = Evidencia del INFORMANTE B.
+- I.3  = Evidencia del INFORMANTE C (si existe).
+- I.4  = Evidencia del INFORMANTE D (si existe).
+- I.5  = Evidencia del INFORMANTE E (si existe).
+- I.6  = Evidencia del INFORMANTE F (si existe).
+- I.7  = Evidencia del INFORMANTE G (si existe).
+- I.8  = Evidencia del INFORMANTE H (si existe).
+- I.9  = Evidencia del INFORMANTE I (si existe).
+- I.10 = Evidencia del INFORMANTE J (si existe).
+
+Regla de asignación para mantener coherencia:
+- Cada hablante identificado como informante se asigna a una única columna I.n durante todo el documento.
+- Si la transcripción no trae etiquetas “I.1/I.2/…”, asigna I.1–I.10 por orden de primera aparición de cada informante
+  identificado (A→J). Mantén esa asignación de forma consistente en todas las filas.
+
+Regla “Voz no identificada”:
+- Si en la transcripción hay “Voz no identificada”, NO la reasignes: colócala solo si el hablante se identifica explícitamente.
+  Si no, omítela para no inventar atribución.
+
+====================================================================
+REGLAS DE EXTRACCIÓN (FIDELIDAD)
+====================================================================
+
+- Copia el texto de la transcripción SIN parafrasear dentro de E.1 / I.1 / I.2 / I.3 / I.4 / I.5 / I.6 / I.7 / I.8 / I.9 / I.10.
+- Puedes recortar porciones, PERO sin alterar palabras (no “mejorar redacción”).
+- Si un código NO tiene evidencia textual, deja E.1 / I.1–I.10 en blanco (vacío).
+
+====================================================================
+REGLAS DE COBERTURA (ANALISIS_DE_COBERTURA)
+====================================================================
+
+Formato obligatorio:
+
+ANÁLISIS_DE_COBERTURA | PREGUNTA_CODIGO | (a)_LO_QUE_SI_APARECE | (b)_LO_QUE_NO_APARECE
+
+Reglas de redacción:
+1) Procesa preguntas de todas las filas.
+2) En (a)_LO_QUE_SI_APARECE: lista 2–5 elementos concretos usando “se declara” o “se menciona”.
+3) En (b)_LO_QUE_NO_APARECE: lista 1–4 faltantes clave usando “no se evidencia” o “no aparece en el texto”.
+4) Prohibido usar lenguaje vago (“parece”, “se entiende”).
+5) No agregar recomendaciones ni planes de acción.
+6) Clasifica cada caso como: TOTALMENTE CUBIERTA, CUBIERTA PARCIALMENTE o NO CUBIERTA TEXTUALMENTE.
+
+====================================================================
+REGLAS DE COMPLETITUD
+====================================================================
+
+- Debes generar UNA FILA por cada PREGUNTA_CODIGO de la guía.
+- Si la transcripción solo cubre algunos códigos, los demás deben quedar con:
+  E.1 / I.1–I.10 vacíos
+  ANALISIS_DE_COBERTURA = NO CUBIERTA TEXTUALMENTE — (explica que no hay evidencia literal)
+- NO crees códigos nuevos.
+- NO elimines códigos de la guía.
+
+====================================================================
+REGLAS DURAS (NO NEGOCIABLES)
+====================================================================
+
+R1. Evidencia = SOLO lo que aparece en la transcripción. Si se dice “podemos sacar de SAP” o “está en repositorio”, eso NO es
+    evidencia entregada; se registra como “se indica que… pero no se entrega…”.
+
+R2. No atribuyas contenido a documentos no mostrados. No asumas que existen versiones, RACI, actas, matrices, % o rankings si no
+    aparecen textual o explícitamente.
+
+R3. Literalidad para términos críticos:
+    - Si la pregunta exige “flujogramas/diagramas de flujo/swimlane”, solo cuenta como cubierto si el texto menciona
+      flujograma/diagrama/flowchart/fotograma o equivalente explícito. “flujo distinto” NO equivale a “flujograma”.
+    - Si exige IPERC/JSA/permisos, solo cuenta si aparece IPERC/JSA/permisos o controles equivalentes explícitos (no
+      “recomendaciones de seguridad” genéricas).
+    - Si exige trazabilidad (ID/versión/link), solo cuenta si se menciona ID, versión, enlace, código documental o mecanismo
+      equivalente explícito.
+
+R4. Conservadurismo: ante duda, baja la cobertura (de total → parcial; de parcial → no cubierta).
+R5. Contradicciones: si hay afirmaciones opuestas, marca PARCIAL y explica el conflicto.
+R6. Profundidad: cada análisis debe incluir:
+    - (a) lo que SÍ se declara en el texto (2–5 elementos concretos)
+    - (b) lo que NO aparece y sería necesario para cubrir totalmente (1–4 faltantes clave)
+R7. No uses lenguaje vago (“parece”, “se entiende”). Usa “se declara”, “se menciona”, “no se evidencia”, “no aparece en el texto”.
+R8. No agregues recomendaciones ni planes de acción. Solo diagnóstico de cobertura.
+
+====================================================================
+FORMATO DE ENTREGA (OBLIGATORIO) — ARCHIVO EXCEL REAL (.xlsx)
+====================================================================
+
+Entrega el resultado como archivo Excel (.xlsx), no como texto pegable:
+- Una sola hoja llamada “MATRIZ” (o “Matriz”).
+- Fila 1 con el encabezado exacto de las 15 columnas en orden.
+- Una fila por cada PREGUNTA_CODIGO.
+- Múltiples fragmentos separados con saltos de línea reales dentro de la celda.
+- No agregar columnas/hojas/tablas Markdown.
+
+====================================================================
+CONTROL DE CALIDAD FINAL (OBLIGATORIO)
+====================================================================
+
+Antes de entregar:
+1) Verifica que están las 15 columnas en el orden exacto.
+2) Verifica que cada fila tiene PREGUNTA_CODIGO correcto.
+3) Verifica que ANALISIS_DE_COBERTURA empieza con una de las 3 etiquetas exactas.
+4) Verifica que no hay atribuciones inventadas (“Voz no identificada”).
+5) Verifica que incluso si SOLO hay cobertura parcial, igualmente se entregan todas las columnas (vacías si aplica, incluyendo I.5–I.10).
+
+====================================================================
+ENTREGA
+====================================================================
+
+Solo la tabla solicitada. No incluyas columnas extra. No incluyas “evidencias” aparte. No incluyas comentarios fuera de la tabla. Finalmente, genera un resumen de todo lo dicho por el entrevistado. Si necesitas incluir aclaraciones o temas en función de lo que el entrevistador formula, adelante. No inventes nada, pero sí resume para que el documento sea fácil de leer.

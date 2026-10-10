@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistematizador IA - Gemini Flash</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { background-color: #f4f6f9; }
+        .chat-container { max-width: 900px; margin: 50px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .response-box { background-color: #f8f9fa; border-left: 5px solid #0d6efd; padding: 15px; margin-top: 20px; display: none; overflow-x: auto;}
+        .loading-bar { display: none; height: 5px; width: 100%; background-color: #e9ecef; margin-top: 10px; overflow: hidden; }
+        .loading-bar-inner { height: 100%; width: 50%; background-color: #0d6efd; animation: move 1s linear infinite; }
+        @keyframes move { 0% { margin-left: -50%; } 100% { margin-left: 100%; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="chat-container">
+        <h2 class="text-center mb-4 text-primary">Sistematizador de Entrevistas (Gemini Flash)</h2>
+        
+        <div class="alert alert-info">
+            <strong>Instrucciones:</strong> Sube la transcripción (.txt) y el ID de evaluación.
+        </div>
+
+        <form id="upload-form">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="evaluacion_id" class="form-label">ID Evaluación (SQL)</label>
+                    <input type="number" class="form-control" id="evaluacion_id" name="evaluacion_id" placeholder="Ej: 17" required>
+                </div>
+                <div class="col-md-8">
+                    <label for="transcripcion_file" class="form-label">Archivo de Transcripción (.txt)</label>
+                    <input type="file" class="form-control" id="transcripcion_file" name="transcripcion_file" accept=".txt,.csv" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" id="btn-procesar">
+                🚀 Procesar con IA
+            </button>
+        </form>
+
+        <div id="progress-container" class="mt-3" style="display: none;">
+            <p class="text-center text-muted">Analizando transcripción...</p>
+            <div class="loading-bar"><div class="loading-bar-inner"></div></div>
+        </div>
+
+        <div id="result-area" class="response-box">
+            <h4>Resultado del Análisis:</h4>
+            <div id="ai-content"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#upload-form').on('submit', function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        
+        $('#btn-procesar').prop('disabled', true).text('Procesando...');
+        $('#progress-container').show();
+        $('#result-area').hide();
+        $('#ai-content').empty();
+
+        $.ajax({
+            url: '/process',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                $('#btn-procesar').prop('disabled', false).text('🚀 Procesar con IA');
+                $('#progress-container').hide();
+                $('#result-area').fadeIn();
+                $('#ai-content').html(response.html_response);
+            },
+            error: function(xhr) {
+                $('#btn-procesar').prop('disabled', false).text('🚀 Procesar con IA');
+                $('#progress-container').hide();
+                alert('Error: ' + (xhr.responseJSON ? xhr.responseJSON.error : 'Error desconocido'));
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
